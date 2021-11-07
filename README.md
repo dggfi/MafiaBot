@@ -12,11 +12,11 @@ Mafia bot for the Starmen.net community.
 
 Activate `Developer Mode` in Discord. This setting can be found from the `Advanced` tab inside of `User settings`. Once activated, right-click your name inside of a chat and select `Copy ID`. Keep this for later.
 
-### 1. Create a Bot.
+### 2. Create a Bot.
 
 Use the [developers](https://discord.com/developers/applications) portal to create an Application. You may then select the `Bot` tab and create a Bot.
 
-### 1. Generate an Authentication token
+### 3. Generate an Authentication token
 
 Inside of the `Bot` tab, generate a token. Please understand that this token should be a closely guarded secret. In this context equivalent to holding a password. Do not share this token with anyone you do not wish to have access to the bot, and be careful not accidentally package it with any other projects.
 
