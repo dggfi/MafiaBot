@@ -1,7 +1,7 @@
 echo "Starting the Mafia Game Server..."
 
 # Work from local environment
-source bout-env/bin/activate
+source venv/bin/activate
 
 # Run
 python3 server.py

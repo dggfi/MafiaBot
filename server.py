@@ -1,5 +1,7 @@
 from servman.servman import ServiceManager
 
 if __name__ == "__main__":
-    sm = ServiceManager()
+    config_path = "./conf/connection_config.json"
+
+    sm = ServiceManager(config_path)
     sm.run()

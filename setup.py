@@ -1,4 +1,3 @@
-import os
 from path import Path
 import json
 
@@ -21,15 +20,31 @@ bot_defaults = {
 txt = json.dumps(bot_defaults, indent=4)
 bot_config_file.write_text(txt)
 
-# server_config.json
-server_config_file = Path("conf/server_config.json")
+# servman_config.json
+# The server for game instances
+servman_config_file = Path("conf/servman_config.json")
+if servman_config_file.exists():
+    servman_config_file.remove()
 
-if server_config_file.exists():
-    server_config_file.remove()
+servman_defaults = {
+    'host': 'localhost',
+    'port': 8000
+}
+
+txt = json.dumps(servman_defaults, indent=4)
+servman_config_file.write_text(txt)
+
+# agent_config.json
+# this represents your connection to the Servman server
+agent_config_file = Path("conf/agent_config.json")
+
+if agent_config_file.exists():
+    agent_config_file.remove()
 
 server_defaults = {
     'host': 'localhost',
     'port': '8000'
 }
+
 txt = json.dumps(server_defaults, indent=4)
-server_config_file.write_text(txt)
+agent_config_file.write_text(txt)

@@ -1,4 +1,11 @@
-bot-env
-conf/
+.vscode
 __pycache__/
-lore/
+
+bot-env/
+venv/
+
+conf/
+libs/
+logs/
+
+lore*

@@ -1,21 +1,31 @@
+import discord
 from discord.ext import commands
 from path import Path
 import json
 from json.decoder import JSONDecodeError
 import sys
 import traceback
-import asyncio
-from bot.typings import IConfig
+import logging
 
 # These cogs are interdepent/aware of each other
 extended_cogs = (
-
+    'cogs.admin',
 )
 
 class MafiaBot(commands.AutoShardedBot):
     def __init__(self):
+        # State
         self.has_loaded_once = False
 
+        # Logging
+        logger = logging.getLogger('discord')
+        logger.setLevel(logging.INFO)
+        handler = logging.FileHandler(filename='logs/discord.log', encoding='utf-8', mode='w')
+        handler.setFormatter(logging.Formatter('%(asctime)s:%(levelname)s:%(name)s: %(message)s'))
+        logger.addHandler(handler)
+        self.logger = logger
+
+        # Config
         config_path = Path("conf/bot_config.json")
 
         if not config_path.exists():
@@ -30,14 +40,23 @@ class MafiaBot(commands.AutoShardedBot):
             print(f"Error: The JSON in {config_path} is not formatted correctly.")
             exit()
         
-        self.config: IConfig = config
+        self.bot_config: IConfig = config
 
-        super().__init__(
-            command_prefix = self.config['default_command_prefix'],
-            description = self.config['description'],
-            bot_public = self.config['bot_public']
+        # Intents
+        intents = discord.Intents(
+            guilds=True,
+            members=True,
+            reactions=True
         )
 
+        super().__init__(
+            command_prefix = self.bot_config['default_command_prefix'],
+            description = self.bot_config['description'],
+            bot_public = self.bot_config['bot_public'],
+            intents=intents
+        )
+
+        # Cogs
         for extension in extended_cogs:
             try:
                 self.load_extension(extension)
@@ -52,3 +71,4 @@ class MafiaBot(commands.AutoShardedBot):
             cog.finalize()
         
         self.has_loaded_once = True
+        print("Mafia Bot ready.")

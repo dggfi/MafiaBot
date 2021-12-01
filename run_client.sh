@@ -1,7 +1,7 @@
 echo "Starting the Mafia Bot..."
 
 # Work inside local environment
-source bot-env/bin/activate
+source venv/bin/activate
 
 # Run
 python3 client.py
