@@ -1,5 +1,6 @@
 import sys, traceback, logging
 from uuid import uuid4 as uuidv4
+import asyncio
 import dataset
 
 class LoreMixin:
@@ -15,6 +16,14 @@ class LoreMixin:
 
 
 class LoreEntry(LoreMixin):
+    @property
+    def subject(self):
+        return self._subject
+    
+    @property
+    def key(self):
+        return self._key
+
     def __init__(self, subject):
         """
 
@@ -36,8 +45,8 @@ class LoreKeeper:
     def __init__(self, connection_uri='sqlite:///lore.db'):
        self.connection_uri = connection_uri
        self.database = dataset.connect(connection_uri)
-       self.spreads = {} # table name: Lore
-       self.entries = {}
+       self.spreads = {} # table name: Spreads
+       self.entries = {} # subject: LoreEntry
 
        logger = logging.getLogger('lorekeeper')
        logger.setLevel(logging.INFO)
@@ -75,6 +84,20 @@ class LoreKeeper:
                 table.upsert_many(lores, ['key'])
         except Exception:
             self.logger.exception(f'Exception inside of transcribe_sync')
+            self.database.rollback()
+        else:
+            self.database.commit()
+    
+    async def transcribe_async(self):
+        self.database.begin()
+        try: 
+            for spread in self.spreads.values():
+                table = self.database[spread.name]
+                for entry in spread.entries.values():
+                    table.upsert(entry.create_lore(), [entry.key])
+                    await asyncio.sleep(0)
+        except Exception:
+            self.logger.exception(f'Exception inside of transcribe_async')
             self.database.rollback()
         else:
             self.database.commit()
