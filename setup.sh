@@ -3,7 +3,7 @@ echo "Setting up the bot..."
 # Purge
 rm -rf venv/
 rm -rf conf/
-rm -rf libs/
+rm -rf libs/pycord
 rm -rf logs/
 
 # Renew
@@ -13,7 +13,7 @@ python3 -m venv venv
 source venv/bin/activate
 
 # Install dependencies
-mkdir libs/
+mkdir -p libs/pycord
 git clone https://github.com/Pycord-Development/pycord libs/pycord
 cd libs/pycord
 

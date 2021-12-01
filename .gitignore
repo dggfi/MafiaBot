@@ -5,7 +5,7 @@ bot-env/
 venv/
 
 conf/
-libs/
+libs/pycord
 logs/
 
-lore*
+lore.db

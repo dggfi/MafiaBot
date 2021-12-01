@@ -13,6 +13,7 @@ bot_defaults = {
     'default_command_prefix': '!',
     'owner_id': 'youridhere',
     'bot_public': True,
+    'guild_ids': [],
     'suppress_configuration_warnings': False,
     'host': 'localhost',
     'port': 443
