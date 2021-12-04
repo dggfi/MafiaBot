@@ -1,3 +1,5 @@
+#!/bin/bash
+
 echo "Setting up the bot..."
 
 # Purge

@@ -6,6 +6,7 @@ venv/
 
 conf/
 libs/pycord
+libs/servman
 logs/
 
 lore.db

@@ -10,6 +10,8 @@ import logging
 # These cogs are interdepent/aware of each other
 extended_cogs = (
     'cogs.admin',
+    'cogs.agent',
+    'cogs.ping'
 )
 
 class MafiaBot(commands.AutoShardedBot):
@@ -40,7 +42,7 @@ class MafiaBot(commands.AutoShardedBot):
             print(f"Error: The JSON in {config_path} is not formatted correctly.")
             exit()
         
-        self.bot_config: IConfig = config
+        self.bot_config = config
 
         # Intents
         intents = discord.Intents(
@@ -68,7 +70,7 @@ class MafiaBot(commands.AutoShardedBot):
     async def on_ready(self):
         for cog_name in self.cogs:
             cog = self.get_cog(cog_name)
-            cog.finalize()
+            await cog.finalize()
         
         self.has_loaded_once = True
         print("Mafia Bot ready.")

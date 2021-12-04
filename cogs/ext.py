@@ -1,4 +1,5 @@
 from discord.ext import commands
+from servman.helpers import Agent
 
 class ExtCog(commands.Cog):
     """
@@ -6,5 +7,9 @@ class ExtCog(commands.Cog):
         once all cogs are loaded in.
     """
 
-    def finalize(self):
+    async def finalize(self):
         pass
+
+
+class AgentCog(Agent, ExtCog):
+    pass
